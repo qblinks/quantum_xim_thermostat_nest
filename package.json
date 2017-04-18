@@ -1,13 +1,13 @@
 {
-  "name": "xim-driver-light-hue",
+  "name": "xim-driver-thermostat-nest",
   "version": "0.0.1",
-  "description": "Qblinks Quantum Cloud XIM Driver for Light/HUE.",
+  "description": "Qblinks Quantum Cloud XIM Driver for Thermostat/Nest.",
   "scripts": {
     "install": "node install.js"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/qblinks/quantum_xim_light_hue"
+    "url": "git://github.com/qblinks/quantum_xim_thermostat_nest.git"
   },
   "keywords": [
     "git",
@@ -16,8 +16,8 @@
     "pre-commit",
     "precommit"
   ],
-  "homepage": "https://github.com/qblinks/quantum_xim_light_hue",
-  "license": "GPLv3",
+  "homepage": "https://github.com/qblinks/quantum_xim_thermostat_nest",
+  "license": "GPL-3.0",
   "devDependencies": {
     "eslint": "^3.11.1",
     "eslint-config-airbnb": "^13.0.0",
@@ -32,5 +32,10 @@
     "mathjs": "^3.8.1",
     "request": "^2.79.0",
     "path": "^0.12.7"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/qblinks/quantum_xim_thermostat_nest/issues"
+  },
+  "main": "index.js",
+  "author": "Tzuching Chang"
 }
