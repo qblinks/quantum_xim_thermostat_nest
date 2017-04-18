@@ -32,6 +32,8 @@ function authenticate(opt, callback) {
     if (error) throw new Error(error);
     else {
       const callback_opt = opt;
+      callback_opt.result = {};
+      callback_opt.xim_content = {};
       const resultJson = JSON.parse(body);
         // console.log(resultJson.result);
       if (resultJson.result === true) {
@@ -43,7 +45,7 @@ function authenticate(opt, callback) {
         callback_opt.result.err_no = 999;
         callback_opt.result.err_msg = 'No available token.';
       }
-      callback(opt);
+      callback(callback_opt);
     }
   });
 }
