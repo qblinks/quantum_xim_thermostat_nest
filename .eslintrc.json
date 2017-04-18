@@ -1,0 +1,14 @@
+{
+    "extends": "airbnb",
+    "plugins": [
+        "react",
+        "jsx-a11y",
+        "import"
+    ],
+    "rules":{
+        "no-console": 0,
+        "strict": 0,
+        "camelcase": 0,
+        "no-underscore-dangle": 0
+    }
+}
