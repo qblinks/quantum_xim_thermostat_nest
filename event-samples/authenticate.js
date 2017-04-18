@@ -14,7 +14,7 @@ const xim_config = require('../.xim_config.js');
 const my_quantum_token = xim_config.quantum_token;
 
 module.exports = {
-  method: 'action',
+  method: 'authenticate',
   xim_type: 'thermostat',
   xim_channel: 'nest',
   xim_channel_set: 0,
