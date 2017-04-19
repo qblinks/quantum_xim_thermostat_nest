@@ -1,4 +1,4 @@
-  /*
+/*
  * Copyright (c) 2017
  * Qblinks Incorporated ("Qblinks").
  * All rights reserved.
@@ -11,19 +11,43 @@
 
 'use strict';
 
+const request = require('request');
 
 /**
  * [authenticate description]
- * @param  {oblect}   options  options object created from xim_instance() with the additional
+ * @param  {object}   opt  options object created from xim_instance() with the additional
  *                    options to perform xim_authenticate, refer to corresponding
  *                    documents for the details
  * @param  {Function} callback callback to be used by the XIM driver
  */
-function authenticate(options, callback) {
-  // this is an empty function to be implemented or a place holder
-  const callback_option = JSON.parse(JSON.stringify(options));
-
-  callback(callback_option);
+function authenticate(opt, callback) {
+  const options = {
+    method: 'GET',
+    url: `${process.env.auth_url}/token/nest/${opt.xim_channel_set}`,
+    headers: {
+      Authorization: `Bearer ${opt.quantum_token}`,
+    },
+  };
+  request(options, (error, response, body) => {
+    if (error) throw new Error(error);
+    else {
+      const callback_opt = opt;
+      callback_opt.result = {};
+      callback_opt.xim_content = {};
+      const resultJson = JSON.parse(body);
+        // console.log(resultJson.result);
+      if (resultJson.result === true) {
+        callback_opt.result.err_no = 0;
+        callback_opt.result.err_msg = 'ok';
+        console.log(resultJson.access_token);
+        callback_opt.xim_content.accessToken = resultJson.access_token;
+      } else {
+        callback_opt.result.err_no = 999;
+        callback_opt.result.err_msg = 'No available token.';
+      }
+      callback(callback_opt);
+    }
+  });
 }
 
 /**

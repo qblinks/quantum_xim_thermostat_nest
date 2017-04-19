@@ -10,6 +10,6 @@
  */
 
 module.exports = {
-  quantum_token: '46711f8b0b67c56187a45096dbb44cf6ad79c86595e11a68860bf470f8d99ad8',
-  device_id: 'MY_DEVICE_ID',
+  quantum_token: 'c4820393c4332c28393547bc6057b59e62e82c6b1d4a92cb387b1453e6b882cc',
+  device_id: 'bb123',
 };
