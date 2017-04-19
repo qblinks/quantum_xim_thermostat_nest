@@ -80,25 +80,23 @@ module.exports = {
         },
         ambient_temperature_f: {
           $isOptional: true,
-          $isPositiveIntegerOrZero: false,
+          $isInteger: true,
           $minValue: -50,
           $maxValue: 150,
         },
         targeted_temperature_f: {
           $isOptional: true,
-          $isPositiveIntegerOrZero: true,
+          $isInteger: true,
           $minValue: 50,
           $maxValue: 90,
         },
         ambient_temperature_c: {
           $isOptional: true,
-          $isPositiveIntegerOrZero: false,
           $minValue: -50,
           $maxValue: 70,
         },
         targeted_temperature_c: {
           $isOptional: true,
-          $isPositiveIntegerOrZero: false,
           $minValue: 9,
           $maxValue: 32,
         },

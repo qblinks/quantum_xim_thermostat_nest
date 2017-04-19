@@ -40,25 +40,23 @@ module.exports = {
   action: {
     target_temperature_high_f: {
       $isOptional: true,
-      $isPositiveIntegerOrZero: true,
+      $isInteger: true,
       $minValue: 50,
       $maxValue: 90,
     },
     target_temperature_low_f: {
       $isOptional: true,
-      $isPositiveIntegerOrZero: true,
+      $isInteger: true,
       $minValue: 50,
       $maxValue: 90,
     },
     target_temperature_high_c: {
       $isOptional: true,
-      $isPositiveIntegerOrZero: false,
       $minValue: 9,
       $maxValue: 32,
     },
     target_temperature_low_c: {
       $isOptional: true,
-      $isPositiveIntegerOrZero: false,
       $minValue: 50,
       $maxValue: 90,
     },
