@@ -61,6 +61,7 @@ module.exports = {
       $maxValue: 90,
     },
     mode: {
+      $isOptional: true,
       $in: [
         'heat',
         'cool',
@@ -70,6 +71,7 @@ module.exports = {
       ],
     },
     homeaway: {
+      $isOptional: true,
       $in: [
         'home',
         'away',

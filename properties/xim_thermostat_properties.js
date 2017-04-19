@@ -136,8 +136,8 @@ module.exports = {
         homeaway: {
           $isOptional: true,
           $in: [
-            true,
-            false,
+            'home',
+            'away',
           ],
         },
         connected: {
@@ -154,6 +154,16 @@ module.exports = {
             false,
           ],
         },
+      },
+    },
+  },
+  strcutures: {
+    $isOptional: true,
+    $: {
+      strcuture_name: {
+        $notEmptyString: true,
+      },
+      strcuture_id: {
       },
     },
   },
