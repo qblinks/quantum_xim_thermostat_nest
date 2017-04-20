@@ -13,14 +13,14 @@
 
 const request = require('request');
 
-function get_devices(access_token, callback){
+function get_devices(access_token, callback) {
   const options = {
     method: 'GET',
-    url: `https://developer-api.nest.com`,
+    url: 'https://developer-api.nest.com',
     headers: {
       'content-type': 'application/json',
       authorization: `Bearer ${access_token}`,
-    }
+    },
   };
   request(options, (error, response, body) => {
     if (!error && response.statusCode === 200) {
@@ -44,12 +44,10 @@ function discovery(opt, callback) {
   if (typeof opt.xim_content === 'undefined') {
     callback_opt.result.err_no = 999;
     callback_opt.result.err_msg = 'xim_content not exist.';
-  }
-  else if (typeof opt.xim_content.access_token === 'undefined') {
+  } else if (typeof opt.xim_content.access_token === 'undefined') {
     callback_opt.result.err_no = 999;
     callback_opt.result.err_msg = 'Access token not exist.';
-  }
-  else {
+  } else {
     get_devices(opt.xim_content.access_token, (result) => {
       if (result === false) {
         callback_opt.result.err_no = 1;
@@ -65,14 +63,14 @@ function discovery(opt, callback) {
         const structures = result.structures;
 
         // parse devices.thermostats
-        for (const device_id in thermostats) {
+        Object.keys(thermostats).forEach((device_id) => {
           const thermostat = {};
           thermostat.device_id = device_id;
           thermostat.device_name = thermostats[device_id].name;
           thermostat.heat_support = thermostats[device_id].can_heat;
           thermostat.cool_support = thermostats[device_id].can_cool;
           thermostat.fan_control_support = thermostats[device_id].has_fan;
-          //thermostat.eco_support = thermostats[device_id].
+          // thermostat.eco_support = thermostats[device_id].
           thermostat.status = {};
           thermostat.status.ambient_temperature_f = thermostats[device_id].ambient_temperature_f;
           thermostat.status.targeted_temperature_f = thermostats[device_id].target_temperature_f;
@@ -86,21 +84,22 @@ function discovery(opt, callback) {
           thermostat.status.homeaway = structures[thermostats[device_id].structure_id].away;
 
           // save device_id and structure_id map in xim_content
-          callback_opt.xim_content.device_structure_map[device_id] = thermostats[device_id].structure_id;
+          callback_opt.xim_content.device_structure_map[device_id] =
+          thermostats[device_id].structure_id;
 
           callback_opt.list.push(thermostat);
-      }
+        });
+        // parse structures
+        // for (const structure_id in structures) {
+        Object.keys(structures).forEach((structure_id) => {
+          const structure = {};
+          structure.strcuture_id = structure_id;
+          structure.strcuture_name = structures[structure_id].name;
 
-      // parse structures
-      for (const structure_id in structures) {
-        const structure = {};
-        structure.strcuture_id = structure_id;
-        structure.strcuture_name = structures[structure_id].name;
+          callback_opt.strcutures.push(structure);
+        });
 
-        callback_opt.strcutures.push(structure);
-      }
-
-      callback(callback_opt);
+        callback(callback_opt);
       }
     });
     return;
