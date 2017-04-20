@@ -19,11 +19,11 @@
   *                 documents for the details
   * @param {function} callback to be used by the XIM driver
   */
-function unlink(options, callback) {
+function unlink(opt, callback) {
   // this is an empty function to be implemented or a place holder
-  const callback_option = JSON.parse(JSON.stringify(options));
+  // const callback_option = JSON.parse(JSON.stringify(options));
 
-  callback(callback_option);
+  callback(opt);
 }
 
 /**

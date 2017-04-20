@@ -98,9 +98,8 @@ function discovery(opt, callback) {
 
           callback_opt.strcutures.push(structure);
         });
-
-        callback(callback_opt);
       }
+      callback(callback_opt);
     });
     return;
   }
