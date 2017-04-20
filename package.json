@@ -31,7 +31,8 @@
     "color-convert": "^1.8.2",
     "mathjs": "^3.8.1",
     "request": "^2.79.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "merge": "^1.2.0"
   },
   "bugs": {
     "url": "https://github.com/qblinks/quantum_xim_thermostat_nest/issues"

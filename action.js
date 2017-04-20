@@ -11,16 +11,25 @@
 
 'use strict';
 
+const merge = require('merge');
+
 /**
  * [action description]
  * @param  {object} option Light action properties
  * @return {bool}        seccess or fail
  */
-function action(option, callback) {
+function action(options, callback) {
   // this is an empty function to be implemented or a place holder
-  const callback_option = JSON.parse(JSON.stringify(options));
+  const callback_options = merge(options, {
+    result: {
+      err_no: 0,
+      err_msg: '',
+    },
+  });
 
-  callback(callback_option);
+  delete callback_options.action;
+
+  callback(callback_options);
 }
 
 /**
