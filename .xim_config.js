@@ -11,5 +11,5 @@
 
 module.exports = {
   quantum_token: 'c4820393c4332c28393547bc6057b59e62e82c6b1d4a92cb387b1453e6b882cc',
-  device_id: 'bb123',
+  device_id: '3n99_BAsOwkMcBd6rdDh4oGWEOb_BFgQ',
 };

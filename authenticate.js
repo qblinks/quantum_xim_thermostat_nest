@@ -34,13 +34,13 @@ function authenticate(opt, callback) {
       const callback_opt = opt;
       callback_opt.result = {};
       callback_opt.xim_content = {};
+
       const resultJson = JSON.parse(body);
-        // console.log(resultJson.result);
       if (resultJson.result === true) {
         callback_opt.result.err_no = 0;
         callback_opt.result.err_msg = 'ok';
-        console.log(resultJson.access_token);
-        callback_opt.xim_content.accessToken = resultJson.access_token;
+        // console.log(resultJson.access_token);
+        callback_opt.xim_content.access_token = resultJson.access_token;
       } else {
         callback_opt.result.err_no = 999;
         callback_opt.result.err_msg = 'No available token.';

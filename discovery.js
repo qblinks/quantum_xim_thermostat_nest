@@ -13,16 +13,99 @@
 
 const request = require('request');
 
+function get_devices(access_token, callback){
+  const options = {
+    method: 'GET',
+    url: `https://developer-api.nest.com`,
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer ${access_token}`,
+    }
+  };
+  request(options, (error, response, body) => {
+    if (!error && response.statusCode === 200) {
+      const jsonResponse = JSON.parse(body);
+      callback(jsonResponse);
+    } else {
+      callback(false);
+    }
+  });
+}
+
 /**
  * for xim interface
- * @param  {object}   option   input xim_content
- * @param  {Function} callback return light list
+ * @param  {object}   opt input xim_content
+ * @param  {Function} callback return thermostat list
  */
-function discovery(options, callback) {
-  // this is an empty function to be implemented or a place holder
-  const callback_option = JSON.parse(JSON.stringify(options));
+function discovery(opt, callback) {
+  const callback_opt = opt;
+  // console.log(JSON.stringify(opt));
+  callback_opt.result = {};
+  if (typeof opt.xim_content === 'undefined') {
+    callback_opt.result.err_no = 999;
+    callback_opt.result.err_msg = 'xim_content not exist.';
+  }
+  else if (typeof opt.xim_content.access_token === 'undefined') {
+    callback_opt.result.err_no = 999;
+    callback_opt.result.err_msg = 'Access token not exist.';
+  }
+  else {
+    get_devices(opt.xim_content.access_token, (result) => {
+      if (result === false) {
+        callback_opt.result.err_no = 1;
+        callback_opt.result.err_msg = 'Request failed.';
+      } else {
+        callback_opt.result.err_no = 0;
+        callback_opt.result.err_msg = 'ok';
+        callback_opt.list = [];
+        callback_opt.strcutures = [];
+        callback_opt.xim_content.device_structure_map = {};
 
-  callback(callback_option);
+        const thermostats = result.devices.thermostats;
+        const structures = result.structures;
+
+        // parse devices.thermostats
+        for (const device_id in thermostats) {
+          const thermostat = {};
+          thermostat.device_id = device_id;
+          thermostat.device_name = thermostats[device_id].name;
+          thermostat.heat_support = thermostats[device_id].can_heat;
+          thermostat.cool_support = thermostats[device_id].can_cool;
+          thermostat.fan_control_support = thermostats[device_id].has_fan;
+          //thermostat.eco_support = thermostats[device_id].
+          thermostat.status = {};
+          thermostat.status.ambient_temperature_f = thermostats[device_id].ambient_temperature_f;
+          thermostat.status.targeted_temperature_f = thermostats[device_id].target_temperature_f;
+          thermostat.status.ambient_temperature_c = thermostats[device_id].ambient_temperature_c;
+          thermostat.status.targeted_temperature_c = thermostats[device_id].target_temperature_c;
+          thermostat.status.ambient_humidity = thermostats[device_id].humidity;
+          thermostat.status.fan = thermostats[device_id].has_fan;
+          thermostat.status.fan_timer = thermostats[device_id].fan_timer_active;
+          thermostat.status.fan_timer_timeout = thermostats[device_id].fan_timer_timeout;
+          thermostat.status.mode = thermostats[device_id].hvac_mode;
+          thermostat.status.homeaway = structures[thermostats[device_id].structure_id].away;
+
+          // save device_id and structure_id map in xim_content
+          callback_opt.xim_content.device_structure_map[device_id] = thermostats[device_id].structure_id;
+
+          callback_opt.list.push(thermostat);
+      }
+
+      // parse structures
+      for (const structure_id in structures) {
+        const structure = {};
+        structure.strcuture_id = structure_id;
+        structure.strcuture_name = structures[structure_id].name;
+
+        callback_opt.strcutures.push(structure);
+      }
+
+      callback(callback_opt);
+      }
+    });
+    return;
+  }
+  callback(callback_opt);
 }
 
 /**
