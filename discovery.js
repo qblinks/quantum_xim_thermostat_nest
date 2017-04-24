@@ -19,7 +19,7 @@ function get_devices(access_token, callback) {
     url: 'https://developer-api.nest.com',
     headers: {
       'content-type': 'application/json',
-      authorization: `Bearer ${access_token}`,
+      Authorization: `Bearer ${access_token}`,
     },
   };
   request(options, (error, response, body) => {
@@ -57,7 +57,8 @@ function discovery(opt, callback) {
         callback_opt.result.err_msg = 'ok';
         callback_opt.list = [];
         callback_opt.strcutures = [];
-        callback_opt.xim_content.device_structure_map = {};
+        callback_opt.xim_content.structures = [];
+        // callback_opt.xim_content.device_structure_map = {};
 
         const thermostats = result.devices.thermostats;
         const structures = result.structures;
@@ -70,7 +71,7 @@ function discovery(opt, callback) {
           thermostat.heat_support = thermostats[device_id].can_heat;
           thermostat.cool_support = thermostats[device_id].can_cool;
           thermostat.fan_control_support = thermostats[device_id].has_fan;
-          // thermostat.eco_support = thermostats[device_id].
+          thermostat.eco_support = true;
           thermostat.status = {};
           thermostat.status.ambient_temperature_f = thermostats[device_id].ambient_temperature_f;
           thermostat.status.targeted_temperature_f = thermostats[device_id].target_temperature_f;
@@ -84,8 +85,8 @@ function discovery(opt, callback) {
           thermostat.status.homeaway = structures[thermostats[device_id].structure_id].away;
 
           // save device_id and structure_id map in xim_content
-          callback_opt.xim_content.device_structure_map[device_id] =
-          thermostats[device_id].structure_id;
+          // callback_opt.xim_content.device_structure_map[device_id] =
+          // thermostats[device_id].structure_id;
 
           callback_opt.list.push(thermostat);
         });
@@ -97,6 +98,8 @@ function discovery(opt, callback) {
           structure.strcuture_name = structures[structure_id].name;
 
           callback_opt.strcutures.push(structure);
+          // save structure ids for differentiate structure and device
+          callback_opt.xim_content.structures.push(structure_id);
         });
       }
       callback(callback_opt);

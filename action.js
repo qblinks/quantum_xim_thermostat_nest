@@ -13,50 +13,39 @@
 
 const request = require('request');
 
-function actionDevice(access_token, device_id, device_action, callback) {
-  const option_device = {
+function execAction(access_token, isStructure, id, actionBody, callback) {
+  const options = {
     method: 'PUT',
-    url: `https://developer-api.nest.com/devices/thermostats/${device_id}`,
+    url: `https://developer-api.nest.com/devices/thermostats/${id}`,
     headers: {
       'content-type': 'application/json',
-      authorization: `Bearer ${access_token}`,
+      Authorization: `Bearer ${access_token}`,
     },
-    // json: true,
-    body: device_action,
+    // formData: JSON.stringify(actionBody),
+    json: true,
+    body: JSON.stringify(actionBody),
   };
-
-  request(option_device, (error, response, body) => {
+  if (isStructure) {
+    options.url = `https://developer-api.nest.com/structures/${id}`;
+  }
+  console.log(options.url);
+  console.log(options.headers);
+  console.log(options.body);
+  request(options, (error, response, body) => {
+    console.log(error);
+    console.log(response.statusCode);
+    console.log(body);
     if (!error && response.statusCode === 200) {
-      const jsonResponse = JSON.parse(body);
-      callback(jsonResponse);
+      // const jsonResponse = JSON.parse(body);
+      callback(true);
     } else {
       callback(false);
     }
   });
 }
 
-function actionStructure(access_token, structure_id, structure_action) {
-  const option_structure = {
-    method: 'PUT',
-    url: `https://developer-api.nest.com/structures/${structure_id}`,
-    headers: {
-      'content-type': 'application/json',
-      authorization: `Bearer ${access_token}`,
-    },
-    // json: true,
-    body: structure_action,
-  };
-
-  request(option_structure, (error, response, body) => {
-    if (!error && response.statusCode === 200) {
-      console.log(body);
-      // const jsonResponse = JSON.parse(body);
-      // callback(jsonResponse);
-    }
-    // else {
-    //   callback(false);
-    // }
-  });
+function arrayContain(array, x) {
+  return (array.indexOf(x) > -1);
 }
 
 /**
@@ -66,6 +55,7 @@ function actionStructure(access_token, structure_id, structure_action) {
  */
 function action(opt, callback) {
   const callback_opt = opt;
+
   // console.log(JSON.stringify(opt));
   callback_opt.result = {};
   if (typeof opt.xim_content === 'undefined') {
@@ -75,16 +65,15 @@ function action(opt, callback) {
     callback_opt.result.err_no = 999;
     callback_opt.result.err_msg = 'Access token not exist.';
   } else {
-    // seperate structure action
-    if (opt.action.homeaway !== 'undefined') {
-      console.log(`homeaway : ${opt.action.homeaway}`);
-      // structure_id
-      actionStructure(opt.xim_content.access_token,
-         opt.xim_content.device_structure_map[opt.device_id], opt.action.homeaway);
-      // delete opt.action.homeaway;
+    // restructure action array, properties key may be different.
+    if (opt.action.mode !== 'undefined') {
+      opt.action.hvac_mode = opt.action.mode;
+      delete opt.action.mode;
     }
-    if (opt.action[0] === 'undefined') {
-      actionDevice(opt.xim_content.access_token, opt.device_id, opt.action, (result) => {
+
+    execAction(opt.xim_content.access_token,
+      arrayContain(opt.xim_content.structures, opt.device_id),
+      opt.device_id, opt.action, (result) => {
         if (result === false) {
           callback_opt.result.err_no = 1;
           callback_opt.result.err_msg = 'Request failed.';
@@ -92,10 +81,15 @@ function action(opt, callback) {
           callback_opt.result.err_no = 0;
           callback_opt.result.err_msg = 'ok';
         }
+        delete callback_opt.device_id;
+        delete callback_opt.action;
         callback(callback_opt);
-      });
-    }
+      }
+    );
+    return;
   }
+  delete callback_opt.device_id;
+  delete callback_opt.action;
   callback(callback_opt);
 }
 

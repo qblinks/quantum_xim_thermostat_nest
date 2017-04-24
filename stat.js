@@ -92,10 +92,12 @@ function stat(opt, callback) {
           callback_opt.list.push(thermostat);
         }
       }
+      delete callback_opt.device_id;
       callback(callback_opt);
     });
     return;
   }
+  delete callback_opt.device_id;
   callback(callback_opt);
 }
 
