@@ -58,22 +58,22 @@ function action(opt, callback) {
 
   // console.log(JSON.stringify(opt));
   callback_opt.result = {};
-  if (typeof opt.xim_content === 'undefined') {
+  if (typeof callback_opt.xim_content === 'undefined') {
     callback_opt.result.err_no = 999;
     callback_opt.result.err_msg = 'xim_content not exist.';
-  } else if (typeof opt.xim_content.access_token === 'undefined') {
+  } else if (typeof callback_opt.xim_content.access_token === 'undefined') {
     callback_opt.result.err_no = 999;
     callback_opt.result.err_msg = 'Access token not exist.';
   } else {
     // restructure action array, properties key may be different.
-    if (opt.action.mode !== 'undefined') {
-      opt.action.hvac_mode = opt.action.mode;
-      delete opt.action.mode;
+    if (callback_opt.action.mode !== 'undefined') {
+      callback_opt.action.hvac_mode = callback_opt.action.mode;
+      delete callback_opt.action.mode;
     }
 
-    execAction(opt.xim_content.access_token,
-      arrayContain(opt.xim_content.structures, opt.device_id),
-      opt.device_id, opt.action, (result) => {
+    execAction(callback_opt.xim_content.access_token,
+      arrayContain(callback_opt.xim_content.structures, callback_opt.device_id),
+      callback_opt.device_id, callback_opt.action, (result) => {
         if (result === false) {
           callback_opt.result.err_no = 1;
           callback_opt.result.err_msg = 'Request failed.';
@@ -84,8 +84,7 @@ function action(opt, callback) {
         delete callback_opt.device_id;
         delete callback_opt.action;
         callback(callback_opt);
-      }
-    );
+      });
     return;
   }
   delete callback_opt.device_id;
