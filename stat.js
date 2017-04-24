@@ -58,7 +58,7 @@ function stat(opt, callback) {
         const thermostats = result.devices.thermostats;
         const structures = result.structures;
 
-        if (thermostats[opt.device_id] === 'undefined') {
+        if (typeof thermostats[opt.device_id] === 'undefined') {
           callback_opt.result.err_no = 2;
           callback_opt.result.err_msg = 'Device not exist.';
         } else {

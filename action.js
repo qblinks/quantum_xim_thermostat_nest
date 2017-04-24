@@ -16,27 +16,27 @@ const request = require('request');
 function execAction(access_token, isStructure, id, actionBody, callback) {
   const options = {
     method: 'PUT',
+    followAllRedirects: true, // Redirects are turned on by default for GET requests only
     url: `https://developer-api.nest.com/devices/thermostats/${id}`,
     headers: {
       'content-type': 'application/json',
       Authorization: `Bearer ${access_token}`,
     },
-    // formData: JSON.stringify(actionBody),
     json: true,
-    body: JSON.stringify(actionBody),
   };
   if (isStructure) {
     options.url = `https://developer-api.nest.com/structures/${id}`;
+    options.body = { away: actionBody.homeaway };
+  } else {
+    const deviceActionBody = actionBody;
+    delete deviceActionBody.homeaway;
+    options.body = deviceActionBody;
   }
   console.log(options.url);
-  console.log(options.headers);
   console.log(options.body);
   request(options, (error, response, body) => {
-    console.log(error);
-    console.log(response.statusCode);
     console.log(body);
     if (!error && response.statusCode === 200) {
-      // const jsonResponse = JSON.parse(body);
       callback(true);
     } else {
       callback(false);
@@ -66,6 +66,8 @@ function action(opt, callback) {
     callback_opt.result.err_msg = 'Access token not exist.';
   } else {
     // restructure action array, properties key may be different.
+    // mode -> hvac_mode
+    // homeaway -> away, set in isStructure
     if (callback_opt.action.mode !== 'undefined') {
       callback_opt.action.hvac_mode = callback_opt.action.mode;
       delete callback_opt.action.mode;

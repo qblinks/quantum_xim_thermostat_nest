@@ -23,5 +23,6 @@ module.exports = {
   device_id: my_device_id,
   action: {
     mode: 'cool',
+    homeaway: 'away',
   },
 };
