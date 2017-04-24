@@ -23,6 +23,7 @@ function execAction(access_token, isStructure, id, actionBody, callback) {
       Authorization: `Bearer ${access_token}`,
     },
     json: true,
+    // body: actionBody, // body is jsonObject
   };
   if (isStructure) {
     options.url = `https://developer-api.nest.com/structures/${id}`;
@@ -44,8 +45,8 @@ function execAction(access_token, isStructure, id, actionBody, callback) {
   });
 }
 
-function arrayContain(array, x) {
-  return (array.indexOf(x) > -1);
+function arrayContain(arr, obj) {
+  return (arr.indexOf(obj) > -1);
 }
 
 /**
@@ -64,6 +65,9 @@ function action(opt, callback) {
   } else if (typeof callback_opt.xim_content.access_token === 'undefined') {
     callback_opt.result.err_no = 999;
     callback_opt.result.err_msg = 'Access token not exist.';
+  } else if (typeof callback_opt.xim_content.structures === 'undefined') {
+    callback_opt.result.err_no = 999;
+    callback_opt.result.err_msg = 'Please redo discovery.';
   } else {
     // restructure action array, properties key may be different.
     // mode -> hvac_mode
@@ -72,7 +76,6 @@ function action(opt, callback) {
       callback_opt.action.hvac_mode = callback_opt.action.mode;
       delete callback_opt.action.mode;
     }
-
     execAction(callback_opt.xim_content.access_token,
       arrayContain(callback_opt.xim_content.structures, callback_opt.device_id),
       callback_opt.device_id, callback_opt.action, (result) => {
