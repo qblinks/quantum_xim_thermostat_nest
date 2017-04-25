@@ -40,7 +40,7 @@ function execAction(access_token, isStructure, id, actionBody, callback) {
     if (!error && response.statusCode === 200) {
       callback(true);
     } else {
-      callback(false);
+      callback(body);
     }
   });
 }
@@ -79,12 +79,16 @@ function action(opt, callback) {
     execAction(callback_opt.xim_content.access_token,
       arrayContain(callback_opt.xim_content.structures, callback_opt.device_id),
       callback_opt.device_id, callback_opt.action, (result) => {
-        if (result === false) {
-          callback_opt.result.err_no = 1;
-          callback_opt.result.err_msg = 'Request failed.';
-        } else {
+        if (result === true) {
           callback_opt.result.err_no = 0;
           callback_opt.result.err_msg = 'ok';
+        } else {
+          callback_opt.result.err_no = 1;
+          if (result !== 'undefined' && result.error !== 'undefined') {
+            callback_opt.result.err_msg = result.error;
+          } else {
+            callback_opt.result.err_msg = 'Request failed.';
+          }
         }
         delete callback_opt.device_id;
         delete callback_opt.action;

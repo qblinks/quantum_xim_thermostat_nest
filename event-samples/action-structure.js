@@ -12,7 +12,7 @@
 const xim_config = require('../.xim_config.js');
 
 const my_quantum_token = xim_config.quantum_token;
-const my_device_id = 'BcX_NS7sNiix9Ktar6QwKbLdbiz9l6cTeMoIjR2aMviYNJZzIsqNsA';
+const my_device_id = xim_config.structure_id;
 
 module.exports = {
   method: 'action',
@@ -22,7 +22,6 @@ module.exports = {
   quantum_token: my_quantum_token,
   device_id: my_device_id,
   action: {
-    mode: 'cool',
     homeaway: 'away',
   },
 };
