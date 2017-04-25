@@ -57,8 +57,8 @@ module.exports = {
     },
     target_temperature_low_c: {
       $isOptional: true,
-      $minValue: 50,
-      $maxValue: 90,
+      $minValue: 9,
+      $maxValue: 32,
     },
     mode: {
       $isOptional: true,
