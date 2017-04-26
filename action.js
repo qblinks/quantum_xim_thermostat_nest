@@ -72,7 +72,7 @@ function action(opt, callback) {
     // restructure action array, properties key may be different.
     // mode -> hvac_mode
     // homeaway -> away, set in isStructure
-    if (callback_opt.action.mode !== 'undefined') {
+    if (typeof callback_opt.action.mode !== 'undefined') {
       callback_opt.action.hvac_mode = callback_opt.action.mode;
       delete callback_opt.action.mode;
     }

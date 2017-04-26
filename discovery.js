@@ -87,7 +87,6 @@ function discovery(opt, callback) {
           // save device_id and structure_id map in xim_content
           // callback_opt.xim_content.device_structure_map[device_id] =
           // thermostats[device_id].structure_id;
-
           callback_opt.list.push(thermostat);
         });
         // parse structures

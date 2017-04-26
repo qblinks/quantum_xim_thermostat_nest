@@ -155,15 +155,27 @@ module.exports = {
           ],
         },
       },
+      action_support: {
+        $: {
+          $in: [
+            'mode',
+            'homeaway',
+            'heat',
+            'cool',
+            'heat-cool',
+            'eco',
+          ],
+        },
+      },
     },
   },
-  strcutures: {
+  groups: {
     $isOptional: true,
     $: {
-      strcuture_name: {
+      group_name: {
         $notEmptyString: true,
       },
-      strcuture_id: {
+      group_id: {
       },
     },
   },

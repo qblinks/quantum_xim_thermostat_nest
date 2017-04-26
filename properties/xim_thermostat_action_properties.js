@@ -38,28 +38,6 @@ module.exports = {
   device_id: {
   },
   action: {
-    target_temperature_high_f: {
-      $isOptional: true,
-      $isInteger: true,
-      $minValue: 50,
-      $maxValue: 90,
-    },
-    target_temperature_low_f: {
-      $isOptional: true,
-      $isInteger: true,
-      $minValue: 50,
-      $maxValue: 90,
-    },
-    target_temperature_high_c: {
-      $isOptional: true,
-      $minValue: 9,
-      $maxValue: 32,
-    },
-    target_temperature_low_c: {
-      $isOptional: true,
-      $minValue: 9,
-      $maxValue: 32,
-    },
     mode: {
       $isOptional: true,
       $in: [
@@ -76,6 +54,82 @@ module.exports = {
         'home',
         'away',
       ],
+    },
+    heat: {
+      $isOptional: true,
+      target_temperature_f: {
+        $isOptional: true,
+        $isInteger: true,
+        $minValue: 50,
+        $maxValue: 90,
+      },
+      target_temperature_c: {
+        $isOptional: true,
+        $minValue: 9,
+        $maxValue: 32,
+      },
+    },
+    cool: {
+      $isOptional: true,
+      target_temperature_f: {
+        $isOptional: true,
+        $isInteger: true,
+        $minValue: 50,
+        $maxValue: 90,
+      },
+      target_temperature_c: {
+        $isOptional: true,
+        $minValue: 9,
+        $maxValue: 32,
+      },
+    },
+    'heat-cool': {
+      target_temperature_high_f: {
+        $isOptional: true,
+        $isInteger: true,
+        $minValue: 50,
+        $maxValue: 90,
+      },
+      target_temperature_low_f: {
+        $isOptional: true,
+        $isInteger: true,
+        $minValue: 50,
+        $maxValue: 90,
+      },
+      target_temperature_high_c: {
+        $isOptional: true,
+        $minValue: 9,
+        $maxValue: 32,
+      },
+      target_temperature_low_c: {
+        $isOptional: true,
+        $minValue: 9,
+        $maxValue: 32,
+      },
+    },
+    eco: {
+      target_temperature_high_f: {
+        $isOptional: true,
+        $isInteger: true,
+        $minValue: 50,
+        $maxValue: 90,
+      },
+      target_temperature_low_f: {
+        $isOptional: true,
+        $isInteger: true,
+        $minValue: 50,
+        $maxValue: 90,
+      },
+      target_temperature_high_c: {
+        $isOptional: true,
+        $minValue: 9,
+        $maxValue: 32,
+      },
+      target_temperature_low_c: {
+        $isOptional: true,
+        $minValue: 9,
+        $maxValue: 32,
+      },
     },
     fan_timer_duration: {
       $isOptional: true,
