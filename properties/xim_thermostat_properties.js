@@ -156,15 +156,74 @@ module.exports = {
         },
       },
       action_support: {
-        $: {
-          $in: [
-            'mode',
-            'homeaway',
-            'heat',
-            'cool',
-            'heat-cool',
-            'eco',
-          ],
+        mode: {
+          $isOptional: true,
+          $: {
+            $in: [
+              'heat',
+              'cool',
+              'heat-cool',
+              'eco',
+              'off',
+            ],
+          },
+        },
+        homeaway: {
+          $isOptional: true,
+          $: {
+            $in: [
+              'home',
+              'away',
+            ],
+          },
+        },
+        heat: {
+          $isOptional: true,
+          target_temperature_f: {
+            $isOptional: true,
+          },
+          target_temperature_c: {
+            $isOptional: true,
+          },
+        },
+        cool: {
+          $isOptional: true,
+          target_temperature_f: {
+            $isOptional: true,
+          },
+          target_temperature_c: {
+            $isOptional: true,
+          },
+        },
+        'heat-cool': {
+          $isOptional: true,
+          target_temperature_high_f: {
+            $isOptional: true,
+          },
+          target_temperature_low_f: {
+            $isOptional: true,
+          },
+          target_temperature_high_c: {
+            $isOptional: true,
+          },
+          target_temperature_low_c: {
+            $isOptional: true,
+          },
+        },
+        eco: {
+          $isOptional: true,
+          target_temperature_high_f: {
+            $isOptional: true,
+          },
+          target_temperature_low_f: {
+            $isOptional: true,
+          },
+          target_temperature_high_c: {
+            $isOptional: true,
+          },
+          target_temperature_low_c: {
+            $isOptional: true,
+          },
         },
       },
     },

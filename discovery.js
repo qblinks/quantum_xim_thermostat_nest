@@ -56,7 +56,7 @@ function discovery(opt, callback) {
         callback_opt.result.err_no = 0;
         callback_opt.result.err_msg = 'ok';
         callback_opt.list = [];
-        callback_opt.strcutures = [];
+        callback_opt.groups = [];
         callback_opt.xim_content.structures = [];
         // callback_opt.xim_content.device_structure_map = {};
 
@@ -83,20 +83,57 @@ function discovery(opt, callback) {
           thermostat.status.fan_timer_timeout = thermostats[device_id].fan_timer_timeout;
           thermostat.status.mode = thermostats[device_id].hvac_mode;
           thermostat.status.homeaway = structures[thermostats[device_id].structure_id].away;
+          // action support
+          thermostat.action_support = {};
+          const mode = ['eco', 'off'];
+          thermostat.action_support.eco = {
+            target_temperature_high_f: true,
+            target_temperature_low_f: true,
+            target_temperature_high_c: true,
+            target_temperature_low_c: true,
+          };
+          if (thermostat.heat_support === true) {
+            mode.push('heat');
+            thermostat.action_support.heat = {
+              target_temperature_f: true,
+              target_temperature_c: true,
+            };
+            if (thermostat.cool_support === true) {
+              mode.push('cool');
+              thermostat.action_support.cool = {
+                target_temperature_f: true,
+                target_temperature_c: true,
+              };
+              mode.push('heat-cool');
+              thermostat.action_support['heat-cool'] = {
+                target_temperature_high_f: true,
+                target_temperature_low_f: true,
+                target_temperature_high_c: true,
+                target_temperature_low_c: true,
+              };
+            }
+          } else if (thermostat.cool_support === true) {
+            mode.push('cool');
+            thermostat.action_support.cool = {
+              target_temperature_f: true,
+              target_temperature_c: true,
+            };
+          }
+          thermostat.action_support.mode = mode;
+          thermostat.action_support.homeaway = ['home', 'away'];
 
           // save device_id and structure_id map in xim_content
           // callback_opt.xim_content.device_structure_map[device_id] =
           // thermostats[device_id].structure_id;
           callback_opt.list.push(thermostat);
         });
-        // parse structures
-        // for (const structure_id in structures) {
+        // parse structures to groups
         Object.keys(structures).forEach((structure_id) => {
           const structure = {};
-          structure.strcuture_id = structure_id;
-          structure.strcuture_name = structures[structure_id].name;
+          structure.group_id = structure_id;
+          structure.group_name = structures[structure_id].name;
 
-          callback_opt.strcutures.push(structure);
+          callback_opt.groups.push(structure);
           // save structure ids for differentiate structure and device
           callback_opt.xim_content.structures.push(structure_id);
         });
