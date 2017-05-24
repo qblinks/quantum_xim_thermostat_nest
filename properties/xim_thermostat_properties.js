@@ -51,17 +51,6 @@ module.exports = {
           false,
         ],
       },
-      group: {
-        $isOptional: true,
-        $: {
-          name: {
-            $notEmptyString: true,
-          },
-          id: {
-            $notEmptyString: true,
-          },
-        },
-      },
       heat_support: {
         $isOptional: true,
         $in: [
@@ -203,52 +192,91 @@ module.exports = {
           $isOptional: true,
           target_temperature_f: {
             $isOptional: true,
+            $in: [
+              true,
+            ],
           },
           target_temperature_c: {
             $isOptional: true,
+            $in: [
+              true,
+            ],
           },
         },
         cool: {
           $isOptional: true,
           target_temperature_f: {
             $isOptional: true,
+            $in: [
+              true,
+            ],
           },
           target_temperature_c: {
             $isOptional: true,
+            $in: [
+              true,
+            ],
           },
         },
         'heat-cool': {
           $isOptional: true,
           target_temperature_high_f: {
             $isOptional: true,
+            $in: [
+              true,
+            ],
           },
           target_temperature_low_f: {
             $isOptional: true,
+            $in: [
+              true,
+            ],
           },
           target_temperature_high_c: {
             $isOptional: true,
+            $in: [
+              true,
+            ],
           },
           target_temperature_low_c: {
             $isOptional: true,
+            $in: [
+              true,
+            ],
           },
         },
         eco: {
           $isOptional: true,
           target_temperature_high_f: {
             $isOptional: true,
+            $in: [
+              true,
+            ],
           },
           target_temperature_low_f: {
             $isOptional: true,
+            $in: [
+              true,
+            ],
           },
           target_temperature_high_c: {
             $isOptional: true,
+            $in: [
+              true,
+            ],
           },
           target_temperature_low_c: {
             $isOptional: true,
+            $in: [
+              true,
+            ],
           },
         },
         fan_timer_duration: {
           $isOptional: true,
+          $in: [
+            true,
+          ],
         },
       },
     },
