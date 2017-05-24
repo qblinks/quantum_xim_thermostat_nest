@@ -43,6 +43,24 @@ module.exports = {
         $notEmptyString: true,
       },
       device_id: {
+        $notEmptyString: true,
+      },
+      is_group: {
+        $in: [
+          true,
+          false,
+        ],
+      },
+      group: {
+        $isOptional: true,
+        $: {
+          name: {
+            $notEmptyString: true,
+          },
+          id: {
+            $notEmptyString: true,
+          },
+        },
       },
       heat_support: {
         $isOptional: true,
@@ -123,6 +141,10 @@ module.exports = {
         fan_timer_timeout: {
           $isOptional: true,
           $notEmptyString: true,
+        },
+        fan_timer_duration: {
+          $isOptional: true,
+          $isPositiveIntegerOrZero: true,
         },
         mode: {
           $in: [
@@ -225,16 +247,9 @@ module.exports = {
             $isOptional: true,
           },
         },
-      },
-    },
-  },
-  groups: {
-    $isOptional: true,
-    $: {
-      group_name: {
-        $notEmptyString: true,
-      },
-      group_id: {
+        fan_timer_duration: {
+          $isOptional: true,
+        },
       },
     },
   },

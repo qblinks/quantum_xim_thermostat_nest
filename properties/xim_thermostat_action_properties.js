@@ -84,6 +84,7 @@ module.exports = {
       },
     },
     'heat-cool': {
+      $isOptional: true,
       target_temperature_high_f: {
         $isOptional: true,
         $isInteger: true,
@@ -108,6 +109,7 @@ module.exports = {
       },
     },
     eco: {
+      $isOptional: true,
       target_temperature_high_f: {
         $isOptional: true,
         $isInteger: true,

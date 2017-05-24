@@ -36,6 +36,7 @@ module.exports = {
     },
   },
   device_id: {
+    $notEmptyString: true,
   },
   locale: {
     $minLength: 1,
