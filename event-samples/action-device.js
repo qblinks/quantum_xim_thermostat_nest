@@ -25,7 +25,7 @@ module.exports = {
     // fan_timer_duration: 18,
     // mode: 'off',
     cool: {
-      target_temperature_c: 24,
+      target_temperature_c: 25,
     },
   },
 };

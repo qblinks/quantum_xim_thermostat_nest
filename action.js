@@ -76,9 +76,9 @@ function action(opt, callback) {
   } else if (typeof opt.xim_content.access_token === 'undefined') {
     callback_opt.result.err_no = 999;
     callback_opt.result.err_msg = 'Access token not exist.';
-  } else if (typeof opt.xim_content.structures === 'undefined') {
-    callback_opt.result.err_no = 999;
-    callback_opt.result.err_msg = 'Please redo discovery.';
+  // } else if (typeof opt.xim_content.structures === 'undefined') {
+  //   callback_opt.result.err_no = 999;
+  //   callback_opt.result.err_msg = 'Please redo discovery.';
   } else {
     // restructure action array, properties key may be different.
     // mode -> hvac_mode
@@ -87,14 +87,10 @@ function action(opt, callback) {
     const actionBody = {};
     let actionTemperature = {};
     let isStructure = false;
-    if (arrayContain(opt.xim_content.structures, opt.device_id)) {
-      if (typeof opt.action.homeaway !== 'undefined') {
-        actionBody.away = opt.action.homeaway;
-        isStructure = true;
-      } else {
-        callback_opt.result.err_no = 2;
-        callback_opt.result.err_msg = 'Groups support homeaway action only.';
-      }
+    if (typeof opt.action.homeaway !== 'undefined') {
+      // if there is homeaway in action, set to structure api
+      actionBody.away = opt.action.homeaway;
+      isStructure = true;
     } else if (typeof opt.action.mode !== 'undefined') {
       actionBody.hvac_mode = opt.action.mode;
     } else if (typeof opt.action.heat !== 'undefined') {
