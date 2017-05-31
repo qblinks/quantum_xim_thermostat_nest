@@ -88,7 +88,7 @@ function discovery(opt, callback) {
           // action support
           thermostat.action_support = {};
           const mode = ['off'];
-          if(thermostat.eco_support){
+          if (thermostat.eco_support) {
             mode.push('eco');
             thermostat.action_support.eco = {
               target_temperature_high_f: true,
