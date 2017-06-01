@@ -112,7 +112,10 @@ function action(opt, callback) {
       str_action = str_action.replace('target', 'eco', 'gi');
       actionTemperature = JSON.parse(str_action);
     } else if (typeof opt.action.fan_timer_duration !== 'undefined') {
-      if (arrayContain([15, 30, 45, 60, 120, 240, 480, 960], opt.action.fan_timer_duration)) {
+      if (opt.action.fan_timer_duration === 0) {
+        actionBody.fan_timer_active = false;
+      } else if (arrayContain([15, 30, 45, 60, 120, 240, 480, 960],
+         opt.action.fan_timer_duration)) {
         actionBody.fan_timer_duration = opt.action.fan_timer_duration;
         actionBody.fan_timer_active = true;
       } else {

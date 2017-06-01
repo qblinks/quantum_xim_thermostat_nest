@@ -22,10 +22,10 @@ module.exports = {
   quantum_token: my_quantum_token,
   device_id: my_device_id,
   action: {
-    // fan_timer_duration: 18,
+    fan_timer_duration: 0,
     // mode: 'off',
-    cool: {
-      target_temperature_c: 25,
-    },
+    // cool: {
+    //   target_temperature_c: 25,
+    // },
   },
 };

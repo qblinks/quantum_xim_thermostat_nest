@@ -88,6 +88,9 @@ function discovery(opt, callback) {
           // action support
           thermostat.action_support = {};
           const mode = ['off'];
+          if (thermostat.status.fan) {
+            thermostat.action_support.fan_timer_duration = true;
+          }
           if (thermostat.eco_support) {
             mode.push('eco');
             thermostat.action_support.eco = {
