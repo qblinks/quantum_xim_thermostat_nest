@@ -11,7 +11,7 @@
 
 'use strict';
 
-const request = require('request');
+const merge = require('merge');
 
 /**
  * [authenticate description]
@@ -21,33 +21,17 @@ const request = require('request');
  * @param  {Function} callback callback to be used by the XIM driver
  */
 function authenticate(opt, callback) {
-  const options = {
-    method: 'GET',
-    url: `${process.env.auth_url}/token/nest/${opt.xim_channel_set}`,
-    headers: {
-      Authorization: `Bearer ${opt.quantum_token}`,
-    },
-  };
-  request(options, (error, response, body) => {
-    if (error) throw new Error(error);
-    else {
-      const callback_opt = opt;
-      callback_opt.result = {};
-      callback_opt.xim_content = {};
+  const callback_opt = merge({}, opt);
 
-      const resultJson = JSON.parse(body);
-      if (resultJson.result === true) {
-        callback_opt.result.err_no = 0;
-        callback_opt.result.err_msg = 'ok';
-        // console.log(resultJson.access_token);
-        callback_opt.xim_content.access_token = resultJson.access_token;
-      } else {
-        callback_opt.result.err_no = 999;
-        callback_opt.result.err_msg = 'No available token.';
-      }
-      callback(callback_opt);
-    }
-  });
+  if (typeof opt.xim_content.access_token === 'undefined') {
+    callback_opt.result.err_no = 113;
+    callback_opt.result.err_msg = 'No Access Token';
+  } else {
+    callback_opt.result.err_no = 0;
+    callback_opt.result.err_msg = 'ok';
+    callback_opt.xim_content.access_token = opt.xim_content.access_token;
+  }
+  callback(callback_opt);
 }
 
 /**
