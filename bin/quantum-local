@@ -131,6 +131,7 @@ const request = require('request'),
                   const req = request(https_options, (error, response, save_body) => {
                     if (response.statusCode != 200) {
                       // error handling
+                      console.log(save_post_object);
                       logger.log('error', 'Invalid XIM driver output.');
                       console.log(save_body);
                       process.exit(0);
