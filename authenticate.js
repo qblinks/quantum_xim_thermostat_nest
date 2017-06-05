@@ -23,6 +23,11 @@ const merge = require('merge');
 function authenticate(opt, callback) {
   const callback_opt = merge({}, opt);
 
+  callback_opt.result = {
+    err_no: 0,
+    err_msg: 'ok',
+  };
+
   if (typeof opt.xim_content.access_token === 'undefined') {
     callback_opt.result.err_no = 113;
     callback_opt.result.err_msg = 'No Access Token';
