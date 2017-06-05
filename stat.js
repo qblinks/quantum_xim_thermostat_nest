@@ -44,29 +44,30 @@ function stat(opt, callback) {
 
   callback_opt.result = {};
   if (typeof opt.xim_content === 'undefined') {
-    callback_opt.result.err_no = 999;
-    callback_opt.result.err_msg = 'xim_content not exist.';
+    callback_opt.result.err_no = 108;
+    callback_opt.result.err_msg = 'No XIM Content';
   } else if (typeof opt.xim_content.access_token === 'undefined') {
-    callback_opt.result.err_no = 999;
-    callback_opt.result.err_msg = 'Access token not exist.';
+    callback_opt.result.err_no = 113;
+    callback_opt.result.err_msg = 'No Access Token';
   } else {
     get_devices(opt.xim_content.access_token, (result) => {
       if (result === false) {
-        callback_opt.result.err_no = 1;
-        callback_opt.result.err_msg = 'Request failed.';
+        callback_opt.result.err_no = 115;
+        callback_opt.result.err_msg = 'Request Failed';
       } else {
         const thermostats = result.devices.thermostats;
         const structures = result.structures;
 
         if (typeof thermostats[opt.device_id] === 'undefined') {
-          callback_opt.result.err_no = 2;
-          callback_opt.result.err_msg = 'Device not exist.';
+          callback_opt.result.err_no = 114;
+          callback_opt.result.err_msg = 'Device Not Exists';
         } else {
           callback_opt.result.err_no = 0;
           callback_opt.result.err_msg = 'ok';
 
           callback_opt.list = [];
           const thermostat = {};
+          thermostat.is_group = false;
           thermostat.device_id = opt.device_id;
           thermostat.device_name = thermostats[opt.device_id].name;
           thermostat.heat_support = thermostats[opt.device_id].can_heat;

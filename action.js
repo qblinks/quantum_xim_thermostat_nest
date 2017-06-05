@@ -71,11 +71,11 @@ function action(opt, callback) {
 
   callback_opt.result = {};
   if (typeof opt.xim_content === 'undefined') {
-    callback_opt.result.err_no = 999;
-    callback_opt.result.err_msg = 'xim_content not exist.';
+    callback_opt.result.err_no = 108;
+    callback_opt.result.err_msg = 'No XIM Content';
   } else if (typeof opt.xim_content.access_token === 'undefined') {
-    callback_opt.result.err_no = 999;
-    callback_opt.result.err_msg = 'Access token not exist.';
+    callback_opt.result.err_no = 113;
+    callback_opt.result.err_msg = 'No Access Token';
   // } else if (typeof opt.xim_content.structures === 'undefined') {
   //   callback_opt.result.err_no = 999;
   //   callback_opt.result.err_msg = 'Please redo discovery.';
@@ -119,15 +119,15 @@ function action(opt, callback) {
         actionBody.fan_timer_duration = opt.action.fan_timer_duration;
         actionBody.fan_timer_active = true;
       } else {
-        callback_opt.result.err_no = 2;
+        callback_opt.result.err_no = 116;
         callback_opt.result.err_msg = 'Fan duration can only be set to 15, 30, 45, 60, 120, 240, 480, or 960.';
       }
     }
 
     if (isEmpty(actionBody)) {
       if (typeof callback_opt.result.err_no === 'undefined') {
-        callback_opt.result.err_no = 2;
-        callback_opt.result.err_msg = 'Error input.';
+        callback_opt.result.err_no = 200;
+        callback_opt.result.err_msg = 'No Access Token';
       }
     } else {
       execAction(opt.xim_content.access_token, isStructure, opt.device_id,
@@ -136,11 +136,11 @@ function action(opt, callback) {
             callback_opt.result.err_no = 0;
             callback_opt.result.err_msg = 'ok';
           } else {
-            callback_opt.result.err_no = 1;
+            callback_opt.result.err_no = 115;
             if (result !== 'undefined' && result.error !== 'undefined') {
               callback_opt.result.err_msg = result.error;
             } else {
-              callback_opt.result.err_msg = 'Request failed.';
+              callback_opt.result.err_msg = 'Request Failed';
             }
           }
           callback(callback_opt);
