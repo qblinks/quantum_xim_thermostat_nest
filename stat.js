@@ -90,6 +90,50 @@ function stat(opt, callback) {
           thermostat.status.mode = thermostats[opt.device_id].hvac_mode;
           thermostat.status.homeaway = structures[thermostats[opt.device_id].structure_id].away;
 
+          // action support
+          thermostat.action_support = {};
+          const mode = ['off'];
+          if (thermostat.status.fan) {
+            thermostat.action_support.fan_timer_duration = true;
+          }
+          if (thermostat.eco_support) {
+            mode.push('eco');
+            thermostat.action_support.eco = {
+              target_temperature_high_f: true,
+              target_temperature_low_f: true,
+              target_temperature_high_c: true,
+              target_temperature_low_c: true,
+            };
+          }
+          if (thermostat.heat_support === true) {
+            mode.push('heat');
+            thermostat.action_support.heat = {
+              target_temperature_f: true,
+              target_temperature_c: true,
+            };
+            if (thermostat.cool_support === true) {
+              mode.push('cool');
+              thermostat.action_support.cool = {
+                target_temperature_f: true,
+                target_temperature_c: true,
+              };
+              mode.push('heat-cool');
+              thermostat.action_support['heat-cool'] = {
+                target_temperature_high_f: true,
+                target_temperature_low_f: true,
+                target_temperature_high_c: true,
+                target_temperature_low_c: true,
+              };
+            }
+          } else if (thermostat.cool_support === true) {
+            mode.push('cool');
+            thermostat.action_support.cool = {
+              target_temperature_f: true,
+              target_temperature_c: true,
+            };
+          }
+          thermostat.action_support.mode = mode;
+
           callback_opt.list.push(thermostat);
         }
       }
