@@ -127,7 +127,7 @@ function action(opt, callback) {
     if (isEmpty(actionBody)) {
       if (typeof callback_opt.result.err_no === 'undefined') {
         callback_opt.result.err_no = 200;
-        callback_opt.result.err_msg = 'No Access Token';
+        callback_opt.result.err_msg = 'Invalid input';
       }
     } else {
       execAction(opt.xim_content.access_token, isStructure, opt.device_id,
@@ -137,10 +137,9 @@ function action(opt, callback) {
             callback_opt.result.err_msg = 'ok';
           } else {
             callback_opt.result.err_no = 115;
-            if (result !== 'undefined' && result.error !== 'undefined') {
-              callback_opt.result.err_msg = result.error;
-            } else {
-              callback_opt.result.err_msg = 'Request Failed';
+            callback_opt.result.err_msg = 'Request Failed';
+            if (typeof result !== 'undefined' && typeof result.error !== 'undefined') {
+              callback_opt.result.err_detail = result.error;
             }
           }
           callback(callback_opt);

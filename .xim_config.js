@@ -10,6 +10,7 @@
  */
 
 module.exports = {
-  quantum_token: 'c4820393c4332c28393547bc6057b59e62e82c6b1d4a92cb387b1453e6b882cc',
-  device_id: '3n99_BAsOwkMcBd6rdDh4oGWEOb_BFgQ',
+  quantum_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBfaWQiOiJ0cmFjbW8iLCJ1c2VybmFtZSI6ImJ1YmJsZUBxYmxpbmtzLmNvbTp0cmFjbW8iLCJzY29wZSI6InRyYWNtbyx4aW0iLCJleHAiOjMxNTM2MDAwMDAsImlhdCI6MTUxMzU4NDI1Nn0.y8wmj-E5qRW_eFu_oxvkRj-ahQNqzOkBgf6W0KUG1xg',
+  device_id: 'TdeqOTa-Pnr5YcAPzcSYPdA5FdOpkwgw',//Hallway (711D)
+  structure_id: 'BcX_NS7sNiix9Ktar6QwKbLdbiz9l6cTeMoIjR2aMviYNJZzIsqNsA',
 };
